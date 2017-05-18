@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import {
   Row,
+  Col,
 } from 'react-bootstrap'
 import Header from './Header'
 import { connect } from 'react-redux'
 import { PriceHistory } from '../actions/index'
+import TableData from './TableData'
 
 class MainComponent extends Component {
   constructor(props) {
@@ -19,9 +21,14 @@ class MainComponent extends Component {
   render() {
     return (
       <div style={{
-        backgroundColor: "hsl(220, 10%, 40%)",
+        // backgroundColor: "hsl(220, 10%, 40%)",
       }}>
         <Header />
+        <Row>
+          <Col sm={4}>
+            <TableData />
+          </Col>
+        </Row>
       </div>
     )
   }

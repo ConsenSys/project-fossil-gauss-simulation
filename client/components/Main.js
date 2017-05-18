@@ -3,11 +3,15 @@ import {
   Row,
 } from 'react-bootstrap'
 import Header from './Header'
+import { connect } from 'react-redux'
 
-export default class Main extends Component {
-  constructor() {
-    super()
-    console.log('main')
+class MainComponent extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+
   }
 
   render() {
@@ -20,3 +24,13 @@ export default class Main extends Component {
     )
   }
 }
+
+const mapStoreToProps = (store, props) => {
+  return {
+    priceHistory: store.priceHistory
+  }
+}
+
+const Main = connect(mapStoreToProps)(MainComponent)
+
+export default Main

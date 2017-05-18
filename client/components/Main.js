@@ -4,6 +4,7 @@ import {
 } from 'react-bootstrap'
 import Header from './Header'
 import { connect } from 'react-redux'
+import { PriceHistory } from '../actions/index'
 
 class MainComponent extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class MainComponent extends Component {
   }
 
   componentDidMount() {
-
+    const { dispatch } = this.props
+    dispatch(PriceHistory.dataChannel())
   }
 
   render() {

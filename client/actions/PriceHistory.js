@@ -17,7 +17,11 @@ export default class PriceHistory {
 
   dataSubscribe(name, expiration_date) {
     return (dispatch) => {
-
+      let payload = {
+        name: name,
+        date: expiration_date
+      }
+      this.socket.write(JSON.stringify(payload))
     }
   }
 }

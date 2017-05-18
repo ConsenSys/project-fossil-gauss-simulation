@@ -3,9 +3,9 @@ import {
   Tabs,
   Tab,
 } from 'react-bootstrap'
+import { connect } from 'react-redux'
 
-
-export default class Header extends Component {
+class HeaderComponent extends Component {
   constructor() {
     super()
     console.log('header ')
@@ -15,15 +15,34 @@ export default class Header extends Component {
 
   }
 
-
+  products() {
+    const { priceHistory: { products } } = this.props
+    console.log('this.props', this.props)
+    console.log('products', products)
+    return products.map((product, i) => {
+      console.log('product', product)
+      return <Tab key={i} eventKey={1} title={product.toString()}>{product}</Tab>
+    })
+    // return (
+    //   <Tab eventKey={1} title={'ex'}>ex</Tab>
+    // )
+  }
 
   render() {
     return (
       <Tabs activeKey={2} onSelect={this.handleSelect} id="controlled-tab-example">
-        <Tab eventKey={1} title="Tab 1">Tab 1 content</Tab>
-        <Tab eventKey={2} title="Tab 2">Tab 2 content</Tab>
-        <Tab eventKey={3} title="Tab 3" disabled>Tab 3 content</Tab>
+        {this.products()}
       </Tabs>
     )
   }
 }
+
+const mapStoreToProps = (store) => {
+  return {
+    priceHistory: store.priceHistory
+  }
+}
+
+const Header = connect(mapStoreToProps)(HeaderComponent)
+
+export default Header

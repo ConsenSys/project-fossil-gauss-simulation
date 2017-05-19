@@ -1,3 +1,5 @@
+import { Dates } from '../products'
+
 const INIT_STATE = {
   price_history: {},
   products: [
@@ -11,6 +13,8 @@ const INIT_STATE = {
     'WTI Financial Futures',
     'WTI-Brent Financial Futures',
   ],
+  dates: Dates,
+  initial_date: '2017-01-01',
   productView: 'Brent Crude Oil Financial Futures'
 }
 

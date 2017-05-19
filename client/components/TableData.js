@@ -9,22 +9,38 @@ class TableDataComponent extends Component {
     super(props)
   }
 
-  tableBody() {
-    // const { priceHistory: { initial_date } } = this.props
-    // console.log('initial_date', initial_date)
-    // let start_date = new Date(2017, 0, 1)
-    // console.log('start_date', start_date)
-    // for (let i = 0; i < 36; i++) {
-    //   start_date = start_date.getMonth()
-    //   con
-    // }
+  tableData() {
+    let jsx = []
     const { priceHistory: { dates } } = this.props
-    console.log('dates', dates)
+    return dates.map((date, i) => {
+      console.log('date', date)
+
+      return (
+        <tr key = {i}>
+          <th>{date.month}</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      )
+    })
+  }
+
+  tableBody() {
+    console.log('hit table body')
+    return (
+      <tbody>
+        {this.tableData()}
+      </tbody>
+    )
   }
 
   render() {
     return (
-      <Table responsive striped bordered condensed hover>
+      <Table responsive striped bordered condensed hover style={{
+        padding: 20,
+      }}>
         <thead>
           <tr>
             <th>Date</th>
@@ -34,9 +50,7 @@ class TableDataComponent extends Component {
             <th>Close</th>
           </tr>
         </thead>
-        <tbody>
-          {this.tableBody()}
-        </tbody>
+        {this.tableBody()}
       </Table>
     )
   }

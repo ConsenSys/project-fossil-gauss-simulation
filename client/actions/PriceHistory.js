@@ -12,7 +12,9 @@ export default class PriceHistory {
       console.log('hit middleware')
       this.socket = new Socket('ws://localhost:3003')
       this.socket.on('data', (data) => {
-        console.log('got data from server!', data.toString())
+        let json_data = JSON.parse(data)
+        console.log('name', json_data.name, json_data.data)
+        dispatch({type: 'UPDATE_PRICE_HISTORY', name: json_data.name, data: json_data.data})
       })
     }
   }

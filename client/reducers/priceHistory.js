@@ -26,6 +26,14 @@ export default function priceHistory(state = INIT_STATE, action) {
         productView: action.value
       }
       break
+    case 'UPDATE_PRICE_HISTORY':
+      return {
+        ...state,
+        priceHistory: {
+          ...state.price_history
+          
+        }
+      }
     default:
       return state
       break

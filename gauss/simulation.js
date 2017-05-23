@@ -214,6 +214,7 @@ export default class Simulation {
         data: obj,
         name: this.name,
       }
+      console.log('payload', payload)
       return rp({
         method: 'GET',
         uri: 'http://localhost:3004/update',

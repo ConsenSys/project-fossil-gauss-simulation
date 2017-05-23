@@ -4,32 +4,41 @@ import {
   Tab,
 } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { PriceHistory } from '../actions/index'
+import Promise from 'bluebird'
 
 class HeaderComponent extends Component {
   constructor() {
     super()
-    console.log('header ')
+    this.handleSelect = this.handleSelect.bind(this)
   }
 
   handleSelect(e) {
     const { dispatch } = this.props
-    dispatch(type: 'CHANGE_PRODUCT_VIEW', value: e)
+    const { priceHistory: { dates } } = this.props
+    dispatch(PriceHistory.commoditySuscribe(e, dates))
+    // return new Promise((resolve, reject) => {
+    //   return new Promise.delay(0).then(() => {
+    //     return dispatch({type: 'CHANGE_PRODUCT_VIEW', value: e})
+    //   }).then(() => {
+    //     return  dispatch(PriceHistory.commoditySuscribe())
+    //   }).then(() => {
+    //     resolve(true)
+    //   }).catch((err) => {
+    //     reject(err)
+    //   })
+    // })
   }
 
   products() {
     const { priceHistory: { products } } = this.props
-    console.log('this.props', this.props)
-    console.log('products', products)
     return products.map((product, i) => {
-      console.log('product', product)
-      return <Tab key={i} eventKey={product} title={product.toString()}>{product}</Tab>
+      return <Tab key={i} eventKey={product} title={product.toString()}></Tab>
     })
-    // return (
-    //   <Tab eventKey={1} title={'ex'}>ex</Tab>
-    // )
   }
 
   render() {
+    console.log('this.props(render)', this.props)
     return (
       <Tabs activeKey={2} onSelect={this.handleSelect} id="controlled-tab-example">
         {this.products()}
@@ -38,7 +47,7 @@ class HeaderComponent extends Component {
   }
 }
 
-const mapStoreToProps = (store) => {
+const mapStoreToProps = (store, props) => {
   return {
     priceHistory: store.priceHistory
   }

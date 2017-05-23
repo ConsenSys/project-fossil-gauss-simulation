@@ -4,9 +4,9 @@
   "description": "Simulating live trading data for a futures market",
   "main": "index.js",
   "scripts": {
-    "gauss-server": "babel-node ./server/server.js --presets es2015",
-    "webpack-dev-server": "webpack-dev-server --content-base client/",
-    "dev": "webpack -d --watch"
+    "gauss-server": "babel-node ./gauss/server.js --presets es2015",
+    "dev": "webpack -d --watch",
+    "webpack-dev-server": "webpack-dev-server --content-base client"
   },
   "keywords": [
     "node",
@@ -18,19 +18,32 @@
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.24.1",
-    "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "ethereumjs-util": "^5.1.1",
     "express": "^4.15.3",
+    "gaussian": "^1.1.0",
+    "level": "^1.7.0",
+    "level-sublevel": "^6.6.1",
+    "levelup": "^1.3.6",
     "pm2": "^2.4.6",
     "react": "^15.5.4",
-    "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
+    "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1",
     "simple-websocket": "^5.0.2",
+    "sublevel": "^2.4.0",
+    "util": "^0.10.3",
     "webpack": "^2.5.1",
     "webpack-dev-server": "^2.4.5"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.1"
   }
 }

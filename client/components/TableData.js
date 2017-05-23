@@ -11,12 +11,11 @@ class TableDataComponent extends Component {
 
   tableData() {
     let jsx = []
-    const { priceHistory: { dates } } = this.props
+    const { priceHistory: { dates, productView, price_history } } = this.props
+    console.log('price_history', price_history)
     return dates.map((date, i) => {
-      console.log('date', date)
-
       return (
-        <tr key = {i}>
+        <tr key={i}>
           <th>{date.month}</th>
           <th></th>
           <th></th>

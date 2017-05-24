@@ -1,9 +1,10 @@
 import Socket from 'simple-websocket'
-import store from '../store'
 import Promise from 'bluebird'
 
+
 export default class PriceHistory {
-  constructor() {
+  constructor(params) {
+    this.store = params.store
     this.socket
   }
 
@@ -13,8 +14,11 @@ export default class PriceHistory {
       this.socket = new Socket('ws://localhost:3003')
       this.socket.on('data', (data) => {
         let json_data = JSON.parse(data)
-        console.log('name', json_data.name, json_data.data)
-        dispatch({type: 'UPDATE_PRICE_HISTORY', name: json_data.name, data: json_data.data})
+        console.log('name', json_data.name, json_data.data, json_data.expiration_date)
+        dispatch({type: 'UPDATE_PRICE_HISTORY',
+          name: json_data.name, data: json_data.data,
+          expiration_date: json_data.expiration_date
+        })
       })
     }
   }
@@ -22,12 +26,16 @@ export default class PriceHistory {
   commoditySuscribe(product, dates) {
     return (dispatch) => {
       return new Promise((resolve, reject) => {
-        return dates.map((date) => {
+        return this.checkObjectTree(product, dates)
+        .then(() => {
+            return dates
+        }).map((date) => {
           console.log('date', date)
           const payload = {
             name: product,
             date: date.month
           }
+          console.log('this.props', this.props)
           this.socket.write(JSON.stringify(payload))
         })
       })
@@ -39,6 +47,19 @@ export default class PriceHistory {
       }
       this.socket.write(JSON.stringify(payload))
     }
+  }
+
+  checkObjectTree(product, dates) {
+    const store = this.store.getState()
+    return new Promise((resolve, reject) => {
+      return dates.map((date) => {
+        console.log('product', product)
+          console.log('store.product', store.product)
+        if(!store['timeSeries']['price_history_data'][product][date]) {
+          dispatch({type: 'ADD_PRODUDCT_DATA', product: product, expiration_date: date})
+        }
+      })
+    })
   }
 
   dataSubscribe(name, expiration_date) {

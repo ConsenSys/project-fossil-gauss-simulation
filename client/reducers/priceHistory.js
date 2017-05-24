@@ -1,17 +1,7 @@
 import { Dates } from '../products'
 
 const INIT_STATE = {
-  price_history: {
-    'Brent Crude Oil Financial Futures': [],
-    'Brent Crude Oil Futures': [],
-    'Canadian Heavy Crude Oil BALMO Futures': [],
-    'Crude Oil Financial Futures': [],
-    'LLS (Angus) vs. Brent Balmo Futures': [],
-    'LLS (Angus) vs. WTI Balmo Futures': [],
-    'LLS (Angus) vs. WTI Financial Futures': [],
-    'WTI Financial Futures': [],
-    'WTI-Brent Financial Futures': [],
-  },
+  price_history: {},
   products: [
     'Brent Crude Oil Financial Futures',
     'Brent Crude Oil Futures',
@@ -37,19 +27,28 @@ export default function priceHistory(state = INIT_STATE, action) {
       }
       break
     case 'UPDATE_PRICE_HISTORY':
-      console.log('hit reducer with data payload', action)
-      let name = action.name
-      console.log('name', name)
-      console.log('state', state.price_history[action.name])
-      console.log('action.data', action.data)
+      console.log('state.price_history[action.name]', state.price_history[action.name])
+      console.log('state.price_history.name[action.expiration_date]', state.price_history.name[action.expiration_date])
       return {
         ...state,
         price_history: {
           ...state.price_history,
-          [name]: state.price_history[name].concat(action.data)
+          [action.name]: {
+            ...state.price_history[action.name],
+            [action.expiration_date]: state.price_history.name[action.expiration_date].concat(action.data)
+          }
         }
       }
       break;
+    case 'ADD_PRODUCT_DATE':
+      return {
+        ...state,
+        price_history: {
+          [action.product] : {
+            [action.expiration_date]: []
+          }
+        }
+      }
     default:
       return state
       break

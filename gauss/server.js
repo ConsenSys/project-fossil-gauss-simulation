@@ -18,10 +18,9 @@ app.use(bodyParser.json())
  * writes updated state to socket
  */
 app.get('/update', (req, res) => {
-  console.log('req.body', req.body)
   const data = JSON.stringify(req.body)
   console.log('updating to current state', data)
-  // socket.write(data)
+  socket.write(data)
   res.send(data)
 })
 
@@ -44,7 +43,8 @@ websocket.on('connection', (_socket) => {
   _socket.on('data', (data) => {
     let temp = JSON.parse(data)
     console.log("recieved message from client w/ data", data.toString())
-    getData(temp.name, temp.date)
+    let date = temp.expiration_date.split('T')[0]
+    getData(temp.name, date)
   })
 })
 
@@ -91,15 +91,17 @@ export function expirationDates(product, expiration_dates) {
  * @param  {string} expiration_date expiration date of product
  */
 export function getData(name, expiration_date) {
+  console.log('hit get data')
   return new Promise((resolve, reject) => {
     return Promise.delay(0)
     .then(() => {
+      console.log('simulations[name][expiration_date]', simulations[name][expiration_date])
       return simulations[name][expiration_date].retrieveData()
     }).then((data) => {
-      console.log('data', data, name)
       let payload = {
         data: data,
         name: name,
+        expiration_date: expiration_date
       }
       socket.write(JSON.stringify(payload))
       return simulations[name][expiration_date].subscribe()

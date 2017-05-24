@@ -213,6 +213,7 @@ export default class Simulation {
       let payload = {
         data: obj,
         name: this.name,
+        expiration_date: this.expiration_date
       }
       console.log('payload', payload)
       return rp({

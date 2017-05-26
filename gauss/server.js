@@ -75,6 +75,7 @@ export function expirationDates(product, expiration_dates) {
   .then(() => {
     return expiration_dates
   }).map((date) => {
+    console.log('date', date.month)
     temp_obj[date.month] = new Simulation({
       name: product.name,
       symbol: product.symbol,
@@ -95,6 +96,7 @@ export function getData(name, expiration_date) {
   return new Promise((resolve, reject) => {
     return Promise.delay(0)
     .then(() => {
+      console.log('name expiration', name, expiration_date)
       console.log('simulations[name][expiration_date]', simulations[name][expiration_date])
       return simulations[name][expiration_date].retrieveData()
     }).then((data) => {

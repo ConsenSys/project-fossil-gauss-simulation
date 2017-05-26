@@ -55,6 +55,7 @@ export default class Simulation {
         //   volume: this.volume
         // })
         this.datum = {
+          x: new Date(),
           date: this.date,
           open: this.open,
           high: this.high,
